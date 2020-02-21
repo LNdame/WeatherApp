@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="label_min">Min</string>
+    <string name="label_current">Current</string>
+    <string name="label_max">Max</string>
+    <string name="content_weatherstatus">weatherStatus</string>
 </resources>

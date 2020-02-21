@@ -3,5 +3,5 @@
     <item>
         <shape android:shape="rectangle"/>
     </item>
-    <item android:drawable="@drawable/sea_cloudy"/>
+    <item android:drawable="@drawable/forest_cloudy"/>
 </layer-list>
