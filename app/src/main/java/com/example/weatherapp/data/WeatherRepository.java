@@ -8,6 +8,7 @@ import com.example.weatherapp.model.WeatherResponse;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,7 +21,7 @@ public class WeatherRepository {
     Retrofit retrofit;
 
     private static WeatherRepository weatherRepository;
-    private WeatherApi weatherApi;
+    private WeatherService weatherService;
 
     public static WeatherRepository getInstance() {
         if (weatherRepository == null) {
@@ -31,12 +32,16 @@ public class WeatherRepository {
 
     private WeatherRepository() {
         WeatherApp.getApiComponent().inject(this);
-        weatherApi = retrofit.create(WeatherApi.class);
+        weatherService = retrofit.create(WeatherService.class);
     }
 
-    public MutableLiveData<WeatherResponse> getCurrentWeather(String location, String apikey) {
+   public Observable<WeatherResponse> getCurrentWeather(String location, String apikey){
+        return weatherService.getCurrentWeather(location,UNITS,apikey);
+    }
+
+   /* public MutableLiveData<WeatherResponse> getCurrentWeather(String location, String apikey) {
         final MutableLiveData<WeatherResponse> weatherData = new MutableLiveData<>();
-        weatherApi.getCurrentWeather(location,UNITS, apikey).enqueue(new Callback<WeatherResponse>() {
+        weatherService.getCurrentWeather(location,UNITS, apikey).enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
                 if (response.isSuccessful()) {
@@ -51,11 +56,11 @@ public class WeatherRepository {
         });
 
         return weatherData;
-    }
+    }*/
 
-    public MutableLiveData<ForecastResponse> getFiveDayForecast(String location, String apikey){
+    /*public MutableLiveData<ForecastResponse> getFiveDayForecast(String location, String apikey){
         final MutableLiveData<ForecastResponse> forecastData = new MutableLiveData<>();
-        weatherApi.getFiveDayForecast(location, UNITS, apikey).enqueue(new Callback<ForecastResponse>() {
+        weatherService.getFiveDayForecast(location, UNITS, apikey).enqueue(new Callback<ForecastResponse>() {
             @Override
             public void onResponse(Call<ForecastResponse> call, Response<ForecastResponse> response) {
                 if(response.isSuccessful()){
@@ -69,7 +74,7 @@ public class WeatherRepository {
             }
         });
         return  forecastData;
-    }
+    }*/
 
 
 }

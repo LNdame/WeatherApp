@@ -17,4 +17,21 @@ public class WeatherResponse {
     @SerializedName("main")
     @Expose
     private MainTemp main;
+
+
+    public Coord getCoord() {
+        return coord;
+    }
+
+    public List<Weather> getWeather() {
+        return weather;
+    }
+
+    public String getBase() {
+        return base;
+    }
+
+    public MainTemp getMain() {
+        return main;
+    }
 }
