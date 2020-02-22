@@ -1,7 +1,6 @@
 package com.example.weatherapp.viewModel;
 
 import android.content.Context;
-import android.os.Bundle;
 
 import androidx.databinding.Bindable;
 import androidx.lifecycle.LiveData;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.weatherapp.WeatherApp;
-import com.example.weatherapp.adapter.ForecastAdapter;
 import com.example.weatherapp.data.WeatherRepository;
 import com.example.weatherapp.model.ForecastItem;
 import com.example.weatherapp.model.ForecastResponse;
@@ -80,7 +78,6 @@ public class MainActivityViewModel extends BaseViewModel  {
 
                     }
                 });
-
     }
 
     private void getForecastData(){
@@ -111,8 +108,6 @@ public class MainActivityViewModel extends BaseViewModel  {
                     }
                 });
     }
-
-
 
     private void setData(WeatherResponse weatherResponse){
         setMainTemp( weatherResponse.getMain() );
@@ -177,10 +172,6 @@ public class MainActivityViewModel extends BaseViewModel  {
         this.forecastItemList = forecastItemList;
     }
 
-     @Bindable
-    public RecyclerView.Adapter<?> getForecastAdapter(){
-     return new ForecastAdapter(this, forecastItemList!=null?forecastItemList:new ArrayList<>());
-    }
 
     @Bindable
     public RecyclerView.LayoutManager getForecastLayoutManager(){
