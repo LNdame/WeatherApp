@@ -51,4 +51,8 @@ public class Weather implements Serializable {
     public void setIcon(String icon) {
         this.icon = icon;
     }
+
+    public final static String CLOUDS ="Clouds";
+    public final static String RAIN ="Rain";
+    public final static String CLEAR ="Clear";
 }
