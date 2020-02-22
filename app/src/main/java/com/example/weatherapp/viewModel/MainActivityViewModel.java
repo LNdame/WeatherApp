@@ -1,9 +1,19 @@
 package com.example.weatherapp.viewModel;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
@@ -11,7 +21,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.WeatherApp;
@@ -21,11 +30,7 @@ import com.example.weatherapp.model.ForecastResponse;
 import com.example.weatherapp.model.MainTemp;
 import com.example.weatherapp.model.Weather;
 import com.example.weatherapp.model.WeatherResponse;
-import com.example.weatherapp.utils.AppUtils;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,30 +42,59 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivityViewModel extends BaseViewModel {
+public class MainActivityViewModel extends BaseViewModel implements LocationListener {
 
     @Inject
     Context context;
     public static final int REMOVE_BACKGROUND = -1;
-    private MutableLiveData<WeatherResponse> weatherLiveData;
     private MutableLiveData<ForecastResponse> forecastData;
     private WeatherRepository weatherRepository;
     private MainTemp mainTemp;
     private Weather weather;
 
+    Location location;
+    LocationManager locationManager;
+    String locationProvider;
+    Criteria criteria;
     private List<ForecastItem> forecastItemList;
     CompositeDisposable disposable = new CompositeDisposable();
 
     public MainActivityViewModel() {
-        WeatherApp.getApiComponent().inject(this);
-        weatherRepository = WeatherRepository.getInstance();
-        forecastData = new MutableLiveData<>();
-        getCurrentWeatherData();
-        getForecastData();
     }
 
-    public void getCurrentWeatherData() {
-        weatherRepository.getCurrentWeather("Helsinki",
+    public void onCreate(Bundle savedInstanceState) {
+        WeatherApp.getApiComponent().inject(this);
+        weatherRepository = WeatherRepository.getInstance();
+        criteria = new Criteria();
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        locationProvider = locationManager.getBestProvider(criteria, false);
+
+        forecastData = new MutableLiveData<>();
+        getLocation(locationProvider);
+        if (location != null) {
+            getCurrentWeatherData(location);
+            getForecastData(location);
+        }
+    }
+
+    private void getLocation(String locationProvider) {
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        if (!isLocationEnabled()) {
+            Toast.makeText(context, "Please turn your location on", Toast.LENGTH_LONG).show();
+            return;
+        }
+        location = locationManager.getLastKnownLocation(locationProvider);
+    }
+
+    public void getCurrentWeatherData(Location location) {
+
+        weatherRepository.getCurrentWeather(location.getLatitude(), location.getLongitude(),
                 "6c38b26ab71e1b2a1da8719a3db7134c")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -88,8 +122,8 @@ public class MainActivityViewModel extends BaseViewModel {
                 });
     }
 
-    private void getForecastData() {
-        weatherRepository.getFiveDayForecast("Helsinki",
+    private void getForecastData(Location location) {
+        weatherRepository.getFiveDayForecast(location.getLatitude(), location.getLongitude(),
                 "6c38b26ab71e1b2a1da8719a3db7134c").
                 observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -131,7 +165,6 @@ public class MainActivityViewModel extends BaseViewModel {
 
     private void setForecastData(ForecastResponse forecastResponse) {
         setForecastItemList(forecastResponse.getList());
-
         notifyChange();
     }
 
@@ -232,7 +265,40 @@ public class MainActivityViewModel extends BaseViewModel {
     }
 
 
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+        );
+    }
 
+    public void onStart() {
+        getLocation(locationProvider);
+        if (location != null) {
+            getCurrentWeatherData(location);
+            getForecastData(location);
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 
 
 }

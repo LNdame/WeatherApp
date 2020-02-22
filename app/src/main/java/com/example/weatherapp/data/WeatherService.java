@@ -10,12 +10,14 @@ import retrofit2.http.Query;
 
 public interface WeatherService {
     @GET("weather")
-    Observable<WeatherResponse> getCurrentWeather(@Query("q") String location,
+    Observable<WeatherResponse> getCurrentWeather(@Query("lat") double lat,
+                                                  @Query("lon") double lon,
                                                   @Query("units") String metric,
                                                   @Query("appid") String apiKey);
 
     @GET("forecast")
-    Observable<ForecastResponse> getFiveDayForecast(@Query("q") String location,
-                                              @Query("units") String metric,
-                                              @Query("appid") String apiKey);
+    Observable<ForecastResponse> getFiveDayForecast(@Query("lat") double lat,
+                                                    @Query("lon") double lon,
+                                                    @Query("units") String metric,
+                                                    @Query("appid") String apiKey);
 }
