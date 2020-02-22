@@ -3,9 +3,10 @@ package com.example.weatherapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ForecastResponse {
+public class ForecastResponse implements Serializable {
 
     @SerializedName("cod")
     @Expose
@@ -18,7 +19,7 @@ public class ForecastResponse {
     private Integer cnt;
     @SerializedName("list")
     @Expose
-    private List<MainTemp> list = null;
+    private List<ForecastItem> list = null;
     @SerializedName("city")
     @Expose
     private City city;
@@ -47,11 +48,11 @@ public class ForecastResponse {
         this.cnt = cnt;
     }
 
-    public List<MainTemp> getList() {
+    public List<ForecastItem> getList() {
         return list;
     }
 
-    public void setList(List<MainTemp> list) {
+    public void setList(List<ForecastItem> list) {
         this.list = list;
     }
 

@@ -1,16 +1,10 @@
 package com.example.weatherapp.viewModel;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import androidx.databinding.Bindable;
-import androidx.databinding.Observable;
-import androidx.databinding.PropertyChangeRegistry;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,11 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.weatherapp.WeatherApp;
 import com.example.weatherapp.adapter.ForecastAdapter;
 import com.example.weatherapp.data.WeatherRepository;
+import com.example.weatherapp.model.ForecastItem;
 import com.example.weatherapp.model.ForecastResponse;
 import com.example.weatherapp.model.MainTemp;
 import com.example.weatherapp.model.Weather;
 import com.example.weatherapp.model.WeatherResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -31,7 +28,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivityViewModel extends BaseViewModel  {
@@ -44,12 +40,15 @@ public class MainActivityViewModel extends BaseViewModel  {
     private WeatherRepository weatherRepository;
     private MainTemp mainTemp;
     private Weather weather;
+
+    private List<ForecastItem> forecastItemList;
     CompositeDisposable disposable = new CompositeDisposable();
 
     public MainActivityViewModel( ) {
         WeatherApp.getApiComponent().inject(this);
         weatherRepository = WeatherRepository.getInstance();
         getCurrentWeatherData();
+        getForecastData();
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +84,35 @@ public class MainActivityViewModel extends BaseViewModel  {
 
     }
 
+    private void getForecastData(){
+        weatherRepository.getFiveDayForecast("Cape Town",
+                "6c38b26ab71e1b2a1da8719a3db7134c").
+                observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ForecastResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ForecastResponse forecastResponse) {
+                        setForecastData(forecastResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
 
     private void setData(WeatherResponse weatherResponse){
         setMainTemp( weatherResponse.getMain() );
@@ -94,16 +122,22 @@ public class MainActivityViewModel extends BaseViewModel  {
         notifyChange();
     }
 
+    private void setForecastData(ForecastResponse forecastResponse){
+        setForecastItemList(forecastResponse.getList());
+
+        notifyChange();
+    }
+
     public String getCurrentTemperature(){
-        return mainTemp!=null?String.format(Locale.ENGLISH,"%.0f",getMainTemp().getTemp()):"";
+        return mainTemp!=null?String.format(Locale.ENGLISH,"%.0f\u00B0",getMainTemp().getTemp()):"";
     }
 
     public String getCurrentMaxTemperature(){
-        return mainTemp!=null? String.format(Locale.ENGLISH,"%.0f",getMainTemp().getTempMax()):"";
+        return mainTemp!=null? String.format(Locale.ENGLISH,"%.0f\u00B0",getMainTemp().getTempMax()):"";
     }
 
     public String getCurrentMinTemperature(){
-        return mainTemp!=null?String.format(Locale.ENGLISH,"%.0f",getMainTemp().getTempMin()):"";
+        return mainTemp!=null?String.format(Locale.ENGLISH,"%.0f\u00B0",getMainTemp().getTempMin()):"";
     }
 
 
@@ -131,10 +165,18 @@ public class MainActivityViewModel extends BaseViewModel  {
         return context;
     }
 
-   /* @Bindable
+    public List<ForecastItem> getForecastItemList() {
+        return forecastItemList;
+    }
+
+    public void setForecastItemList(List<ForecastItem> forecastItemList) {
+        this.forecastItemList = forecastItemList;
+    }
+
+     @Bindable
     public RecyclerView.Adapter<?> getForecastAdapter(){
-       // return ForecastAdapter()
-    }*/
+     return new ForecastAdapter(this, forecastItemList!=null?forecastItemList:new ArrayList<>());
+    }
 
     @Bindable
     public RecyclerView.LayoutManager getForecastLayoutManager(){

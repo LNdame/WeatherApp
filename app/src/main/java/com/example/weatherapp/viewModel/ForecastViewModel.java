@@ -1,22 +1,19 @@
 package com.example.weatherapp.viewModel;
 
-import com.example.weatherapp.model.MainTemp;
-import com.example.weatherapp.model.Weather;
-
+import com.example.weatherapp.model.ForecastItem;
 import java.util.Locale;
 
 public class ForecastViewModel extends BaseViewModel {
     private MainActivityViewModel parent;
-    private MainTemp temp;
-   // private Weather weather;
+    private ForecastItem item;
 
-    public ForecastViewModel(MainActivityViewModel parent, MainTemp temp ) {
+    public ForecastViewModel(MainActivityViewModel parent, ForecastItem item ) {
         this.parent = parent;
-        this.temp = temp;
+        this.item = item;
 
     }
 
     public String getDayTemperature(){
-        return String.format(Locale.ENGLISH,"%.0f",temp.getTemp());
+        return String.format(Locale.ENGLISH,"%.0f",item.getMain().getTemp());
     }
 }

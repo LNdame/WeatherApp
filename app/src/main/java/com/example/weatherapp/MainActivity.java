@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
@@ -36,5 +37,9 @@ public class MainActivity extends AppCompatActivity {
         binding.setViewModel(viewModel);
 
         viewModel.onCreate(savedInstanceState);
+
+        RecyclerView recyclerView = binding.forecastRecycler;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(viewModel.getForecastAdapter());
     }
 }

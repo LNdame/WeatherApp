@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherapp.WeatherApp;
 import com.example.weatherapp.databinding.ForecastItemBinding;
-import com.example.weatherapp.model.MainTemp;
+import com.example.weatherapp.model.ForecastItem;
 import com.example.weatherapp.viewModel.ForecastViewModel;
 import com.example.weatherapp.viewModel.MainActivityViewModel;
 
@@ -23,9 +23,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<BindingHolder<Forecast
     Context context;
     private final MainActivityViewModel parentViewModel;
     private LayoutInflater inflater;
-    private List<MainTemp> items;
+    private List<ForecastItem> items;
 
-    public ForecastAdapter(MainActivityViewModel parentViewModel, List<MainTemp> items) {
+    public ForecastAdapter(MainActivityViewModel parentViewModel, List<ForecastItem> items) {
         WeatherApp.getApiComponent().inject(this);
         this.parentViewModel = parentViewModel;
         this.items = items;

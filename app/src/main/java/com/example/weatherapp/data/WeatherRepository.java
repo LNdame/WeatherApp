@@ -39,6 +39,10 @@ public class WeatherRepository {
         return weatherService.getCurrentWeather(location,UNITS,apikey);
     }
 
+    public Observable<ForecastResponse> getFiveDayForecast(String location, String apikey){
+        return weatherService.getFiveDayForecast(location,UNITS,apikey);
+    }
+
    /* public MutableLiveData<WeatherResponse> getCurrentWeather(String location, String apikey) {
         final MutableLiveData<WeatherResponse> weatherData = new MutableLiveData<>();
         weatherService.getCurrentWeather(location,UNITS, apikey).enqueue(new Callback<WeatherResponse>() {

@@ -48,7 +48,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:text="18"
+            android:text="@{viewModel.dayTemperature}"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
