@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.databinding.Bindable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,11 +48,9 @@ public class MainActivityViewModel extends BaseViewModel  {
     public MainActivityViewModel( ) {
         WeatherApp.getApiComponent().inject(this);
         weatherRepository = WeatherRepository.getInstance();
+        forecastData = new MutableLiveData<>();
         getCurrentWeatherData();
         getForecastData();
-    }
-
-    public void onCreate(Bundle savedInstanceState) {
     }
 
     public void getCurrentWeatherData(){
@@ -98,6 +97,7 @@ public class MainActivityViewModel extends BaseViewModel  {
                     @Override
                     public void onNext(ForecastResponse forecastResponse) {
                         setForecastData(forecastResponse);
+                        forecastData.setValue(forecastResponse);
                     }
 
                     @Override
@@ -120,6 +120,10 @@ public class MainActivityViewModel extends BaseViewModel  {
             setWeather(weatherResponse.getWeather().get(0));
         }
         notifyChange();
+    }
+
+    public LiveData<ForecastResponse> getForecastLiveData(){
+        return forecastData;
     }
 
     private void setForecastData(ForecastResponse forecastResponse){

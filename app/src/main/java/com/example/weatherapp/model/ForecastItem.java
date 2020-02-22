@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 public class ForecastItem implements Serializable {
 
@@ -51,5 +52,9 @@ public class ForecastItem implements Serializable {
 
     public void setDtTxt(String dtTxt) {
         this.dtTxt = dtTxt;
+    }
+
+    public String getDayTemperature(){
+        return String.format(Locale.ENGLISH,"%.0f",getMain().getTemp());
     }
 }

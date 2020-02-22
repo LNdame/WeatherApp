@@ -40,8 +40,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<BindingHolder<Forecast
 
     @Override
     public void onBindViewHolder(@NonNull BindingHolder<ForecastItemBinding> holder, int position) {
-        ForecastItemBinding binding = holder.getBinding();
-        binding.setViewModel(new ForecastViewModel(parentViewModel,items.get(position)));
+      //  ForecastItemBinding binding = holder.getBinding();
+       // binding.setViewModel(new ForecastViewModel(parentViewModel,items.get(position)));
     }
 
     @Override
