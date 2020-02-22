@@ -1,8 +1,4 @@
 package com.example.weatherapp.model;
-
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
@@ -14,14 +10,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import timber.log.Timber;
 
 public class ForecastItem implements Serializable {
 
@@ -108,6 +102,4 @@ public class ForecastItem implements Serializable {
     public static void setImageViewResource(ImageView imageView, int resource) {
         imageView.setImageResource(resource);
     }
-
-
 }

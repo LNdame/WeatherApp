@@ -299,6 +299,4 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
     public void onProviderDisabled(String provider) {
 
     }
-
-
 }
