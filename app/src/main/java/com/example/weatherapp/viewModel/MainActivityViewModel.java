@@ -8,15 +8,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.Bindable;
-import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,7 +42,7 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
 
     @Inject
     Context context;
-    public static final int REMOVE_BACKGROUND = -1;
+
     private MutableLiveData<ForecastResponse> forecastData;
     private WeatherRepository weatherRepository;
     private MainTemp mainTemp;
@@ -241,16 +237,6 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
         }
     }
 
-    @BindingAdapter({"backgroundColor"})
-    public static void setBackground(View view, @ColorRes int resource) {
-        if (view == null) return;
-        if (resource == REMOVE_BACKGROUND) {
-            view.setBackground(null);
-        } else {
-            view.setBackground(ContextCompat.getDrawable(view.getContext(), resource));
-        }
-    }
-
     public int setupBackgroundColor(String desc) {
         switch (desc) {
             case Weather.CLOUDS:
@@ -263,7 +249,6 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
                 return R.color.colorCloudy;
         }
     }
-
 
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);

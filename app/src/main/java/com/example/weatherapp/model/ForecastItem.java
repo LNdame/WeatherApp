@@ -98,8 +98,4 @@ public class ForecastItem implements Serializable {
         }
     }
 
-    @BindingAdapter({"imageSource"})
-    public static void setImageViewResource(ImageView imageView, int resource) {
-        imageView.setImageResource(resource);
-    }
 }

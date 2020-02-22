@@ -1,5 +1,12 @@
 package com.example.weatherapp.utils;
 
+import android.view.View;
+import android.widget.ImageView;
+
+import androidx.annotation.ColorRes;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.BindingAdapter;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,6 +16,7 @@ import java.util.Locale;
 import timber.log.Timber;
 
 public class AppUtils {
+    private static final int REMOVE_BACKGROUND = -1;
 
     public static Date transformDate(String datetoConvert) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
@@ -57,7 +65,19 @@ public class AppUtils {
         }
     }
 
+    @BindingAdapter({"imageSource"})
+    public static void setImageViewResource(ImageView imageView, int resource) {
+        imageView.setImageResource(resource);
+    }
 
-
+    @BindingAdapter({"backgroundColor"})
+    public static void setBackground(View view, @ColorRes int resource) {
+        if (view == null) return;
+        if (resource == REMOVE_BACKGROUND) {
+            view.setBackground(null);
+        } else {
+            view.setBackground(ContextCompat.getDrawable(view.getContext(), resource));
+        }
+    }
 
 }
