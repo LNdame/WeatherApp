@@ -19,7 +19,6 @@ public class WeatherResponse implements Serializable {
     @Expose
     private MainTemp main;
 
-
     public Coord getCoord() {
         return coord;
     }

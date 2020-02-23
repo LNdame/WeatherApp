@@ -38,7 +38,6 @@ public class LocationActivity extends AppCompatActivity {
         getAllLocation();
     }
 
-
     private void getAllLocation() {
         viewModel.getCitiesLiveData().observe(this,
                 cities -> locationAdapter.setCities(cities)) ;

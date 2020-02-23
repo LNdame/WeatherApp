@@ -1,9 +1,6 @@
 package com.example.weatherapp.model;
-import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
-import androidx.databinding.BindingAdapter;
-
 import com.example.weatherapp.R;
 import com.example.weatherapp.utils.AppUtils;
 import com.google.gson.annotations.Expose;

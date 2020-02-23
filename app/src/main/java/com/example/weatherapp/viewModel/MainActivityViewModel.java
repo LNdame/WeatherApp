@@ -30,6 +30,7 @@ import com.example.weatherapp.model.MainTemp;
 import com.example.weatherapp.model.Weather;
 import com.example.weatherapp.model.WeatherResponse;
 import com.example.weatherapp.utils.AppExecutors;
+import com.example.weatherapp.utils.AppUtils;
 import com.example.weatherapp.view.LocationActivity;
 
 import java.util.List;
@@ -188,6 +189,9 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
         return mainTemp != null ? String.format(Locale.ENGLISH, "%.0f\u00B0", getMainTemp().getTempMin()) : "";
     }
 
+    public String getLocation(){
+        return city!=null? String.format("%s - %s",city.getName(),city.getCountry()):"";
+    }
 
     public String getCurrentWeather() {
         return weather != null ? getWeather().getMain().toUpperCase() : "";
@@ -238,11 +242,11 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
 
     public int setupWeatherImage(String desc) {
         switch (desc) {
-            case Weather.CLOUDS:
+            case AppUtils.WEATHER_CLOUDS:
                 return R.drawable.cloudy;
-            case Weather.RAIN:
+            case AppUtils.WEATHER_RAIN:
                 return R.drawable.rainy;
-            case Weather.CLEAR:
+            case AppUtils.WEATHER_CLEAR:
                 return R.drawable.sunny;
             default:
                 return R.drawable.cloudy;
@@ -251,11 +255,11 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
 
     public int setupBackgroundColor(String desc) {
         switch (desc) {
-            case Weather.CLOUDS:
+            case AppUtils.WEATHER_CLOUDS:
                 return R.color.colorCloudy;
-            case Weather.RAIN:
+            case AppUtils.WEATHER_RAIN:
                 return R.color.colorRainy;
-            case Weather.CLEAR:
+            case AppUtils.WEATHER_CLEAR:
                 return R.color.colorSunny;
             default:
                 return R.color.colorCloudy;

@@ -30,7 +30,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -64,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng capetown = new LatLng(-33.92, 18.42);
         mMap.addMarker(new MarkerOptions().position(capetown).title("Marker in Cape Town"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(capetown));
+        mMap.setMinZoomPreference(6.0f);
         retrieveLocations();
         getCitiesLiveData().observe(this, this::dropPins);
     }

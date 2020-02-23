@@ -18,6 +18,10 @@ import timber.log.Timber;
 public class AppUtils {
     private static final int REMOVE_BACKGROUND = -1;
 
+    public final static String WEATHER_CLOUDS ="Clouds";
+    public final static String WEATHER_RAIN ="Rain";
+    public final static String WEATHER_CLEAR ="Clear";
+
     public static Date transformDate(String dateToConvert) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         Date date = new Date();
