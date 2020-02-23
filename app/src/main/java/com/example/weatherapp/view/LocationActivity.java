@@ -22,11 +22,12 @@ public class LocationActivity extends AppCompatActivity {
     private ActivityLocationBinding binding;
     private LocationActivityViewModel viewModel;
     private LocationAdapter locationAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_location);
-        viewModel =  ViewModelProviders.of(this).get(LocationActivityViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(LocationActivityViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
 
@@ -40,6 +41,6 @@ public class LocationActivity extends AppCompatActivity {
 
     private void getAllLocation() {
         viewModel.getCitiesLiveData().observe(this,
-                cities -> locationAdapter.setCities(cities)) ;
+                cities -> locationAdapter.setCities(cities));
     }
 }

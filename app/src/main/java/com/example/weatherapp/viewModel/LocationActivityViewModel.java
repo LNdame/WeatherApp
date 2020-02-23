@@ -33,23 +33,24 @@ public class LocationActivityViewModel extends BaseViewModel {
 
     public LocationActivityViewModel() {
     }
+
     public void onCreate(Bundle savedInstanceState) {
         WeatherApp.getApiComponent().inject(this);
-        weatherDB= WeatherDatabase.getInstance(context);
+        weatherDB = WeatherDatabase.getInstance(context);
         citiesMutableLiveData = new MutableLiveData<>();
         retrieveLocations();
     }
 
-    public void retrieveLocations(){
+    public void retrieveLocations() {
         AppExecutors.getInstance().getMainThread().execute(
-                ()->{
+                () -> {
                     final List<City> cities = weatherDB.cityDao().getCities();
                     citiesMutableLiveData.postValue((ArrayList<City>) cities);
                 }
         );
     }
 
-    public LiveData<ArrayList<City>> getCitiesLiveData(){
+    public LiveData<ArrayList<City>> getCitiesLiveData() {
         return citiesMutableLiveData;
     }
 
@@ -62,10 +63,9 @@ public class LocationActivityViewModel extends BaseViewModel {
         return new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
     }
 
-    public void viewFavoritesMap(){
+    public void viewFavoritesMap() {
         Intent intent = new Intent(getContext(), MapsActivity.class);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-
         getContext().startActivity(intent);
     }
 

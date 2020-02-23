@@ -26,6 +26,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private WeatherDatabase weatherDB;
     private MutableLiveData<ArrayList<City>> citiesMutableLiveData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,26 +34,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        weatherDB= WeatherDatabase.getInstance(this);
+        weatherDB = WeatherDatabase.getInstance(this);
         citiesMutableLiveData = new MutableLiveData<>();
     }
 
-    public void retrieveLocations(){
+    public void retrieveLocations() {
         AppExecutors.getInstance().getMainThread().execute(
-                ()->{
+                () -> {
                     final List<City> cities = weatherDB.cityDao().getCities();
                     citiesMutableLiveData.postValue((ArrayList<City>) cities);
                 }
         );
     }
-    public LiveData<ArrayList<City>> getCitiesLiveData(){
+
+    public LiveData<ArrayList<City>> getCitiesLiveData() {
         return citiesMutableLiveData;
     }
 
-    public void dropPins(ArrayList<City> cities){
-        for(City city: cities){
+    public void dropPins(ArrayList<City> cities) {
+        for (City city : cities) {
             LatLng latLng = new LatLng(city.getLat(), city.getLon());
-            mMap.addMarker(new MarkerOptions().position(latLng).title(String.format("Marker in %s",city.getName())));
+            mMap.addMarker(new MarkerOptions().position(latLng).title(String.format("Marker in %s", city.getName())));
         }
     }
 

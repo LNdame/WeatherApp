@@ -1,6 +1,7 @@
 package com.example.weatherapp.model;
 
 import androidx.annotation.DrawableRes;
+
 import com.example.weatherapp.R;
 import com.example.weatherapp.utils.AppUtils;
 import com.google.gson.annotations.Expose;
@@ -73,16 +74,16 @@ public class ForecastItem implements Serializable {
         return AppUtils.dayOfWeekString(day);
     }
 
-    final static String CLOUDS ="Clouds";
-    final static String RAIN ="Rain";
-    final static String CLEAR ="Clear";
+    final static String CLOUDS = "Clouds";
+    final static String RAIN = "Rain";
+    final static String CLEAR = "Clear";
 
     @DrawableRes
-    public int getWeatherImage(){
-        return  setupWeatherImage(weather.get(0).getMain());
+    public int getWeatherImage() {
+        return setupWeatherImage(weather.get(0).getMain());
     }
 
-    public int setupWeatherImage(String desc){
+    public int setupWeatherImage(String desc) {
         switch (desc) {
             case CLOUDS:
                 return R.drawable.ic_action_partlysunny;

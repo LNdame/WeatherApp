@@ -16,6 +16,7 @@ import com.example.weatherapp.adapter.ForecastListAdapter;
 import com.example.weatherapp.databinding.ActivityMainBinding;
 import com.example.weatherapp.model.ForecastItem;
 import com.example.weatherapp.viewModel.MainActivityViewModel;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private MainActivityViewModel viewModel;
     private ForecastListAdapter forecastListAdapter;
     int PERMISSION_ID = 44;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(!checkPermissions()){
+        if (!checkPermissions()) {
             requestPermissions();
         }
         super.onCreate(savedInstanceState);
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PERMISSION_ID) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startActivity(new Intent(this, MainActivity.class));
-            }else{
+            } else {
                 this.finish();
             }
         }

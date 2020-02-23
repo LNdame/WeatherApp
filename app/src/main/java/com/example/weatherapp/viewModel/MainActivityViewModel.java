@@ -77,7 +77,7 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
         locationProvider = locationManager.getBestProvider(criteria, false);
 
         forecastData = new MutableLiveData<>();
-        weatherDB= WeatherDatabase.getInstance(context);
+        weatherDB = WeatherDatabase.getInstance(context);
         getLocation(locationProvider);
         if (location != null) {
             getCurrentWeatherData(location);
@@ -189,8 +189,8 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
         return mainTemp != null ? String.format(Locale.ENGLISH, "%.0f\u00B0", getMainTemp().getTempMin()) : "";
     }
 
-    public String getLocation(){
-        return city!=null? String.format("%s - %s",city.getName(),city.getCountry()):"";
+    public String getLocation() {
+        return city != null ? String.format("%s - %s", city.getName(), city.getCountry()) : "";
     }
 
     public String getCurrentWeather() {
@@ -300,28 +300,29 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
     public void onProviderDisabled(String provider) {
 
     }
-    private void cityExist(String name){
-        AppExecutors.getInstance().getMainThread().execute(()->{
+
+    private void cityExist(String name) {
+        AppExecutors.getInstance().getMainThread().execute(() -> {
             List<City> cities = weatherDB.cityDao().checkCityExist(name);
-            if(cities.size()>0){}
+            if (cities.size() > 0) {
+            }
         });
     }
 
-    public void saveCityToFavorite(){
-        if(city!=null){
+    public void saveCityToFavorite() {
+        if (city != null) {
             city.setLat(city.getCoord().getLat());
             city.setLon(city.getCoord().getLon());
             saveCity(city);
         }
     }
 
-    public void saveCity(City city){
-        AppExecutors.getInstance().getDiskIO().execute(()->weatherDB.cityDao().insertAll(city));
+    public void saveCity(City city) {
+        AppExecutors.getInstance().getDiskIO().execute(() -> weatherDB.cityDao().insertAll(city));
         Toast.makeText(getContext(), "Location Saved", Toast.LENGTH_LONG).show();
-
     }
 
-    public void viewFavorites(){
+    public void viewFavorites() {
         Intent intent = new Intent(getContext(), LocationActivity.class);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         getContext().startActivity(intent);

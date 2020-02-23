@@ -12,8 +12,8 @@ import dagger.Provides;
 
 @Module
 public class AndroidModule {
-   private final ViewModelProvider.AndroidViewModelFactory viewModelFactory;
-   private final Context applicationContext;
+    private final ViewModelProvider.AndroidViewModelFactory viewModelFactory;
+    private final Context applicationContext;
 
     public AndroidModule(Application application) {
         this.applicationContext = application.getBaseContext();
@@ -22,7 +22,9 @@ public class AndroidModule {
 
     @Provides
     @Singleton
-    Context provideApplicationContext(){return applicationContext;}
+    Context provideApplicationContext() {
+        return applicationContext;
+    }
 
     @Provides
     @Singleton

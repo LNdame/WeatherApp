@@ -19,9 +19,9 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     @NonNull
     @Override
     public LocationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LocationItemBinding locationItemBinding=
+        LocationItemBinding locationItemBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                        R.layout.location_item,parent,false);
+                        R.layout.location_item, parent, false);
         return new LocationViewHolder(locationItemBinding);
     }
 
@@ -32,7 +32,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     @Override
     public int getItemCount() {
-        return cities!=null?cities.size(): 0;
+        return cities != null ? cities.size() : 0;
     }
 
     public void setCities(ArrayList<City> cities) {
@@ -40,10 +40,10 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         notifyDataSetChanged();
     }
 
-    class LocationViewHolder extends RecyclerView.ViewHolder{
+    class LocationViewHolder extends RecyclerView.ViewHolder {
         private LocationItemBinding locationItemBinding;
 
-        public LocationViewHolder(@NonNull  LocationItemBinding locationItemBinding) {
+        public LocationViewHolder(@NonNull LocationItemBinding locationItemBinding) {
             super(locationItemBinding.getRoot());
             this.locationItemBinding = locationItemBinding;
         }

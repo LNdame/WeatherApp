@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 public abstract class BaseViewModel extends ViewModel implements Observable {
 
     private PropertyChangeRegistry callbacks = new PropertyChangeRegistry();
+
     @Override
     public void addOnPropertyChangedCallback(Observable.OnPropertyChangedCallback callback) {
         callbacks.add(callback);
@@ -20,6 +21,7 @@ public abstract class BaseViewModel extends ViewModel implements Observable {
     void notifyChange() {
         callbacks.notifyCallbacks(this, 0, null);
     }
+
     void notifyPropertyChanged(int fieldId) {
         callbacks.notifyCallbacks(this, fieldId, null);
     }

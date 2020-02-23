@@ -27,7 +27,6 @@ public class ApiModule {
         this.baseUrl = baseUrl;
     }
 
-
     @Provides
     @Singleton
     Cache provideHttpCache(Application application) {
@@ -37,7 +36,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    Gson provideGson(){
+    Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
         return gsonBuilder.create();
@@ -58,7 +57,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient){
+    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(baseUrl)

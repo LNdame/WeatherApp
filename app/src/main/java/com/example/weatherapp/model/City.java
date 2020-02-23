@@ -112,7 +112,7 @@ public class City implements Serializable {
     }
 
     public String getCountry() {
-        return country ;
+        return country;
     }
 
     public void setCountry(String country) {

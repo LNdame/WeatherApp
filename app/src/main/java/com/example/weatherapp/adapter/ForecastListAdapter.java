@@ -19,13 +19,14 @@ import java.util.Date;
 
 public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapter.ForecastViewHolder> {
 
-private ArrayList<ForecastItem> forecastItems;
+    private ArrayList<ForecastItem> forecastItems;
+
     @NonNull
     @Override
     public ForecastViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ForecastItemBinding forecastItemBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                        R.layout.forecast_item,parent,false);
+                        R.layout.forecast_item, parent, false);
         return new ForecastViewHolder(forecastItemBinding);
     }
 
@@ -36,7 +37,7 @@ private ArrayList<ForecastItem> forecastItems;
 
     @Override
     public int getItemCount() {
-        return forecastItems!=null?forecastItems.size(): 0;
+        return forecastItems != null ? forecastItems.size() : 0;
     }
 
     public void setForecastItems(ArrayList<ForecastItem> forecastItems) {
@@ -46,12 +47,12 @@ private ArrayList<ForecastItem> forecastItems;
     }
 
 
-    private ArrayList<ForecastItem> sanitizeData(ArrayList<ForecastItem> forecastItemList){
+    private ArrayList<ForecastItem> sanitizeData(ArrayList<ForecastItem> forecastItemList) {
         ArrayList<ForecastItem> forecastItems = new ArrayList<>();
         Date currentDate = Calendar.getInstance().getTime();
-        for(ForecastItem item : forecastItemList){
-            if(AppUtils.getDayOfWeek(currentDate)!= AppUtils.getDayOfWeek(item.getDtTxt())){
-                if(!isDayForecatAlreadyIn(forecastItems, item.getDtTxt())){
+        for (ForecastItem item : forecastItemList) {
+            if (AppUtils.getDayOfWeek(currentDate) != AppUtils.getDayOfWeek(item.getDtTxt())) {
+                if (!isDayForecatAlreadyIn(forecastItems, item.getDtTxt())) {
                     forecastItems.add(item);
                 }
             }
@@ -59,17 +60,17 @@ private ArrayList<ForecastItem> forecastItems;
         return forecastItems;
     }
 
-    private boolean isDayForecatAlreadyIn(ArrayList<ForecastItem> forecastItems, String dateString){
-        if (forecastItems==null||forecastItems.size()==0)return false;
-        for(ForecastItem item : forecastItems){
-            if(AppUtils.getDayOfWeek(item.getDtTxt())== AppUtils.getDayOfWeek(dateString)){
+    private boolean isDayForecatAlreadyIn(ArrayList<ForecastItem> forecastItems, String dateString) {
+        if (forecastItems == null || forecastItems.size() == 0) return false;
+        for (ForecastItem item : forecastItems) {
+            if (AppUtils.getDayOfWeek(item.getDtTxt()) == AppUtils.getDayOfWeek(dateString)) {
                 return true;
             }
         }
         return false;
     }
 
-    class ForecastViewHolder extends RecyclerView.ViewHolder{
+    class ForecastViewHolder extends RecyclerView.ViewHolder {
         private ForecastItemBinding forecastItemBinding;
 
         public ForecastViewHolder(@NonNull ForecastItemBinding forecastItemBinding) {
