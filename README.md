@@ -13,3 +13,5 @@ api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units={units}&appid=
 api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&units={units}&appid={apikey}
 
 The app presents an adapgttive background depending on the weather of the current location.
+
+## Illustrations
