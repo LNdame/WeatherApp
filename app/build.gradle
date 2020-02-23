@@ -45,6 +45,7 @@ dependencies {
 
     implementation "android.arch.lifecycle:viewmodel:$rootProject.archVersion"
     implementation "android.arch.lifecycle:extensions:$rootProject.archVersion"
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archVersion"
 
     implementation 'com.google.dagger:dagger-android:2.26'

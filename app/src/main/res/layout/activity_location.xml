@@ -57,6 +57,7 @@
             android:layout_marginBottom="16dp"
             android:background="@color/colorRainy"
             android:drawableStart="@drawable/ic_action_map"
+            android:onClick="@{()->viewModel.viewFavoritesMap()}"
             android:text="Map"
             android:textSize="26sp"
             android:textColor="@android:color/white"
