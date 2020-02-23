@@ -23,3 +23,6 @@ The app presents an adaptive background depending on the weather of the current 
 ## Gif
 
 <img src= "screenshots/weather_gif_2.gif" width=300>
+
+## Pipeline
+<img src= "screenshots/pipeline.png" width=400>
