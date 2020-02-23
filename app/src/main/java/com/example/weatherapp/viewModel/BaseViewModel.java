@@ -4,7 +4,7 @@ import androidx.databinding.Observable;
 import androidx.databinding.PropertyChangeRegistry;
 import androidx.lifecycle.ViewModel;
 
-public class BaseViewModel extends ViewModel implements Observable {
+public abstract class BaseViewModel extends ViewModel implements Observable {
 
     private PropertyChangeRegistry callbacks = new PropertyChangeRegistry();
     @Override
@@ -16,8 +16,6 @@ public class BaseViewModel extends ViewModel implements Observable {
     public void removeOnPropertyChangedCallback(Observable.OnPropertyChangedCallback callback) {
         callbacks.remove(callback);
     }
-
-
 
     void notifyChange() {
         callbacks.notifyCallbacks(this, 0, null);
