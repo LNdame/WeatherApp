@@ -12,8 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        backgroundColor="@{viewModel.weatherImageColor}"
-        tools:context=".MainActivity">
+        backgroundColor= "@{viewModel.weatherImageColor}"
+        tools:context=".view.MainActivity">
 
 
         <LinearLayout
@@ -34,16 +34,18 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imageView"
+                    imageSource="@{viewModel.weatherImageBackground}"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/content_weatherstatus"
                     android:scaleType="fitXY"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    imageSource="@{viewModel.weatherImageBackground}"
-                    />
+                    app:layout_constraintVertical_bias="0.0"
+                     />
 
                 <TextView
                     android:id="@+id/txtemperature"
@@ -72,6 +74,38 @@
                     app:layout_constraintStart_toStartOf="@+id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/txtemperature" />
 
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
+                    android:elevation="0dp"
+                    android:textColor="@android:color/white"
+                    android:onClick="@{()->viewModel.viewFavorites()}"
+                    android:textSize="10sp"
+                    android:drawableStart="@drawable/ic_action_view_location"
+                    android:text="@string/label_view_location"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_action_add"
+                    android:onClick="@{()->viewModel.saveCityToFavorite()}"
+                    android:elevation="0dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    android:text="@string/label_add_to_favorite"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -81,7 +115,7 @@
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.currentMinTemperature}"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textSize="22sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -117,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/label_min"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="normal" />
                 </LinearLayout>
 
@@ -139,7 +173,7 @@
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.currentTemperature}"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textSize="22sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -147,13 +181,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/label_current"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="normal" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="31dp"
-                    android:layout_height="match_parent"
+                    android:id="@+id/linearLayout6"
+                    android:layout_width="50dp"
+                    android:layout_height="54dp"
                     android:layout_marginEnd="16dp"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -163,21 +198,30 @@
 
                     <TextView
                         android:id="@+id/txtTempMax"
-                        android:layout_width="wrap_content"
+                        android:layout_width="42dp"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.currentMaxTemperature}"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textSize="22sp"
                         android:textStyle="normal" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/label_max"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="normal" />
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>

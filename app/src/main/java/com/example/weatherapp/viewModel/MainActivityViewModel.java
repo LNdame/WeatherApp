@@ -2,6 +2,7 @@ package com.example.weatherapp.viewModel;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -20,12 +21,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.WeatherApp;
+import com.example.weatherapp.data.WeatherDatabase;
 import com.example.weatherapp.data.WeatherRepository;
+import com.example.weatherapp.model.City;
 import com.example.weatherapp.model.ForecastItem;
 import com.example.weatherapp.model.ForecastResponse;
 import com.example.weatherapp.model.MainTemp;
 import com.example.weatherapp.model.Weather;
 import com.example.weatherapp.model.WeatherResponse;
+import com.example.weatherapp.utils.AppExecutors;
+import com.example.weatherapp.view.LocationActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -37,6 +42,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class MainActivityViewModel extends BaseViewModel implements LocationListener {
 
@@ -53,6 +60,9 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
     String locationProvider;
     Criteria criteria;
     private List<ForecastItem> forecastItemList;
+    private WeatherDatabase weatherDB;
+    City city;
+    boolean isCitySaved;
     CompositeDisposable disposable = new CompositeDisposable();
 
     public MainActivityViewModel() {
@@ -66,6 +76,7 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
         locationProvider = locationManager.getBestProvider(criteria, false);
 
         forecastData = new MutableLiveData<>();
+        weatherDB= WeatherDatabase.getInstance(context);
         getLocation(locationProvider);
         if (location != null) {
             getCurrentWeatherData(location);
@@ -161,6 +172,7 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
 
     private void setForecastData(ForecastResponse forecastResponse) {
         setForecastItemList(forecastResponse.getList());
+        city = forecastResponse.getCity();
         notifyChange();
     }
 
@@ -283,5 +295,31 @@ public class MainActivityViewModel extends BaseViewModel implements LocationList
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+    private void cityExist(String name){
+        AppExecutors.getInstance().getMainThread().execute(()->{
+            List<City> cities = weatherDB.cityDao().checkCityExist(name);
+            if(cities.size()>0){}
+        });
+    }
+
+    public void saveCityToFavorite(){
+        if(city!=null){
+            city.setLat(city.getCoord().getLat());
+            city.setLon(city.getCoord().getLon());
+            saveCity(city);
+        }
+    }
+
+    public void saveCity(City city){
+        AppExecutors.getInstance().getDiskIO().execute(()->weatherDB.cityDao().insertAll(city));
+        Toast.makeText(getContext(), "Location Saved", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void viewFavorites(){
+        Intent intent = new Intent(getContext(), LocationActivity.class);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(intent);
     }
 }

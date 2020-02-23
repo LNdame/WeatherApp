@@ -18,11 +18,11 @@ import timber.log.Timber;
 public class AppUtils {
     private static final int REMOVE_BACKGROUND = -1;
 
-    public static Date transformDate(String datetoConvert) {
+    public static Date transformDate(String dateToConvert) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         Date date = new Date();
         try {
-            date = format.parse(datetoConvert);
+            date = format.parse(dateToConvert);
         } catch (ParseException e) {
             Timber.e(e);
         }

@@ -4,4 +4,7 @@
     <string name="label_current">Current</string>
     <string name="label_max">Max</string>
     <string name="content_weatherstatus">weatherStatus</string>
+    <string name="label_view_location">View Location</string>
+    <string name="label_add_to_favorite">Add To Favorite</string>
+    <string name="label_my_favourite_location">My Favourite Locations</string>
 </resources>

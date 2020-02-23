@@ -1,4 +1,4 @@
-package com.example.weatherapp;
+package com.example.weatherapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
+import com.example.weatherapp.R;
 import com.example.weatherapp.adapter.ForecastListAdapter;
 import com.example.weatherapp.databinding.ActivityMainBinding;
 import com.example.weatherapp.model.ForecastItem;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PERMISSION_ID) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Granted. Start getting the location information
+
             }else{
                 this.finish();
             }
